@@ -7,15 +7,16 @@
 int main(void)
 {
 
-    const int screenWidth = 1200;
-    const int screenHeight = 800;
+    int screenWidth = 1200;
+    int screenHeight = 800;
     
     InitWindow(screenWidth, screenHeight, "Voxelcraft 2D");
+    SetWindowState(FLAG_WINDOW_RESIZABLE);
 
     Camera2D camera = { 0 };
-    int cameraYOffset = 100;
+    
     camera.target = (Vector2){ screenWidth / 2.0f, screenHeight / 2.0f };
-    camera.offset = (Vector2){ screenWidth / 2.0f, (screenHeight / 2.0f)+cameraYOffset };
+    camera.offset = (Vector2){ screenWidth / 2.0f, (screenHeight / 2.0f) + ((screenHeight/100)*15) };
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
 
@@ -30,17 +31,24 @@ int main(void)
     SetTargetFPS(60);               
     while (!WindowShouldClose())    
     {
+        //Eğer ekran boyutu deişirse kamerayı güncelleme
+        if(GetScreenWidth() != screenWidth || GetScreenHeight() != screenHeight){
+            screenWidth = GetScreenWidth();
+            screenHeight = GetScreenHeight();
+            camera.offset = (Vector2){ screenWidth / 2.0f, (screenHeight / 2.0f) + ((screenHeight/100)*15) };
+
+        }
 
         map.render();
         player.render(map.AllMap);
 
         BeginDrawing();
             
-            ClearBackground(RAYWHITE);
+            ClearBackground((Color){135, 206, 250, 255});
 
             BeginMode2D(camera);
 
-            map.draw();
+            map.draw((Vector2){player.rect.x,player.rect.y});
             
             player.draw();
 

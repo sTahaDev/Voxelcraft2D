@@ -41,25 +41,42 @@ void Map::render()
     }
 }
 
-void Map::draw()
+void Map::draw(Vector2 playerPos)
 {
     for (int i = 0; i < AllMap.size(); i++)
-    {
-        AllMap[i]->draw();
+    {   
+        //Chunk sistemi. Sadece chunka dahil olanları çiz.
+        if((AllMap[i]->getRect().x >= playerPos.x && AllMap[i]->getRect().x <= playerPos.x + (blockSize * chunk.x)) || (AllMap[i]->getRect().x <= playerPos.x && AllMap[i]->getRect().x >= playerPos.x - (blockSize * chunk.x))){
+            if((AllMap[i]->getRect().y >= playerPos.y && AllMap[i]->getRect().y <= playerPos.y + (blockSize * chunk.y)) || (AllMap[i]->getRect().y <= playerPos.y && AllMap[i]->getRect().y >= playerPos.y - (blockSize * chunk.y))){
+                AllMap[i]->draw();
+            }
+            
+        }
+        
     }
 }
 
 Vector2 Map::calculateBlockPositon()
 {
     mousePos = GetMousePosition();
-
+    
     // Fare pozisyonunu kamera pozisyonuna göre düzelt
     Vector2 correctedMousePos = {(mousePos.x - camera.offset.x) / camera.zoom + camera.target.x,
                                  (mousePos.y - camera.offset.y) / camera.zoom + camera.target.y};
 
+    std::cout << correctedMousePos.y << std::endl;
+
     // Heseplama
     int x = ((int)correctedMousePos.x / blockSize) * blockSize;
     int y = ((int)correctedMousePos.y / blockSize) * blockSize;
+    
+    //Sıfırdam küçük iken olan bug ı düzelttim
+    if(correctedMousePos.x < 0){
+        x -= blockSize;
+    }
+    if(correctedMousePos.y < 0){
+        y -= blockSize;
+    }
 
     return {(float)x, (float)y};
 }
