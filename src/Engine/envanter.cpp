@@ -28,6 +28,7 @@ void Envanter::render()
             {
         
                 currentItem = items[i];
+                selectedItemIndex = i;
                 
             }
         }

@@ -4,6 +4,7 @@
 #include <Engine/block.hpp>
 #include <Engine/player.hpp>
 #include <Engine/envanter.hpp>
+#include <Engine/ui.hpp>
 
 int main(void)
 {
@@ -24,6 +25,9 @@ int main(void)
     Envanter envanter;
     envanter.setup();
 
+    UI ui(envanter);
+    ui.setup();
+
     Map map(screenWidth,screenHeight,camera,envanter);
     map.setup();
 
@@ -43,21 +47,27 @@ int main(void)
             screenHeight = GetScreenHeight();
             camera.offset = (Vector2){ screenWidth / 2.0f, (screenHeight / 2.0f) + ((screenHeight/100)*15) };
 
+            //Ui'i düzenle
+            ui.updateScreen();
+
         }
 
         envanter.render();
         map.render();
         player.render(map.AllMap);
+        ui.render();
 
         BeginDrawing();
             
             ClearBackground((Color){135, 206, 250, 255});
-
+            
             BeginMode2D(camera);
 
             map.draw((Vector2){player.rect.x,player.rect.y});
             
             player.draw();
+            EndMode2D();
+            ui.draw();
 
         EndDrawing();
         
