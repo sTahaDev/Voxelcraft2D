@@ -3,6 +3,7 @@
 #include <Engine/map.hpp>
 #include <Engine/block.hpp>
 #include <Engine/player.hpp>
+#include <Engine/envanter.hpp>
 
 int main(void)
 {
@@ -20,12 +21,17 @@ int main(void)
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
 
-    Map map(screenWidth,screenHeight,camera);
+    Envanter envanter;
+    envanter.setup();
+
+    Map map(screenWidth,screenHeight,camera,envanter);
     map.setup();
 
     Player player({0,0,50,100},camera);
     player.setup();
     player.color = RED;
+
+    
 
     SetConfigFlags(FLAG_VSYNC_HINT);
     SetTargetFPS(60);               
@@ -39,6 +45,7 @@ int main(void)
 
         }
 
+        envanter.render();
         map.render();
         player.render(map.AllMap);
 

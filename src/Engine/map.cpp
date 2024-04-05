@@ -6,7 +6,7 @@ void Map::setup()
     // Çimen Katmanı
     for (int i = 0; i < lineLength; i++)
     {
-        AllMap.push_back(new Block(blockUrls.grass, i * blockSize, windowHeight - (blockSize * 2), blockSize, blockSize));
+        AllMap.push_back(new Block(envanter.blockUrls.grass, i * blockSize, windowHeight - (blockSize * 2), blockSize, blockSize));
         AllMap.back()->setup();
     }
     // Toprak Katmanı
@@ -14,7 +14,7 @@ void Map::setup()
     {
         for (int i = 0; i < lineLength; i++)
         {
-            AllMap.push_back(new Block(blockUrls.dirt, i * blockSize, windowHeight - (blockSize * (1-k)), blockSize, blockSize));
+            AllMap.push_back(new Block(envanter.blockUrls.dirt, i * blockSize, windowHeight - (blockSize * (1-k)), blockSize, blockSize));
             AllMap.back()->setup();
         }
     }
@@ -26,7 +26,7 @@ void Map::render()
     // Block Ekleme Mape
     if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
     {
-        AllMap.push_back(new Block(blockUrls.dirt, this->calculateBlockPositon().x, calculateBlockPositon().y, blockSize, blockSize));
+        AllMap.push_back(new Block(envanter.currentItem, this->calculateBlockPositon().x, calculateBlockPositon().y, blockSize, blockSize));
         AllMap.back()->setup();
     }
 

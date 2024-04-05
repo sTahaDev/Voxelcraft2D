@@ -5,27 +5,23 @@
 #include <raylib.h>
 #include <Engine/block.hpp>
 #include <vector>
+#include <Engine/envanter.hpp>
 
 class Map{
 public:
 
-    Map(int windowWidth,int windowHeight,Camera2D& camera) : camera(camera){
+    Map(int windowWidth,int windowHeight,Camera2D& camera,Envanter &envanter) : camera(camera),envanter(envanter){
         this->windowWidth = windowWidth;
         this->windowHeight = windowHeight;
+        
     }
 
     std::vector<Block*> AllMap;
     void setup();
     void render();
     void draw(Vector2 playerPos);
-
-    struct
-    {
-        std::string dirt = "../assets/dirt.png";
-        std::string grass = "../assets/grass.png";
-        std::string cobblestone = "../assets/rock.png";
-        std::string wood = "../assets/wood.png";
-    }blockUrls;
+    Envanter& envanter;
+  
 
     int blockSize = 50;
     int lineLength = 300;
