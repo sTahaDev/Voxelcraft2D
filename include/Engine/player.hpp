@@ -10,12 +10,15 @@
 class Player : public GameObject{
 
 public:
-    Player(Rectangle rect) : GameObject(rect){}
+    Player(Rectangle rect,Camera2D& camera) : GameObject(rect),camera(camera){
+        
+    }
 
     void setup();
     void render(std::vector<Block*> blocks);
     void draw();
-
+    
+    
 private:
     int speedAmount;
     int jumpAmount;
@@ -23,6 +26,7 @@ private:
     int velocity;
     int gravity;
     int maxVelocity;
-
+    int colliderOptimisationBlockLimit;
+    Camera2D &camera;
 
 };

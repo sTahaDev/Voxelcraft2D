@@ -12,10 +12,17 @@ int main(void)
     
     InitWindow(screenWidth, screenHeight, "Voxelcraft 2D");
 
-    Map map(screenWidth,screenHeight);
+    Camera2D camera = { 0 };
+    int cameraYOffset = 100;
+    camera.target = (Vector2){ screenWidth / 2.0f, screenHeight / 2.0f };
+    camera.offset = (Vector2){ screenWidth / 2.0f, (screenHeight / 2.0f)+cameraYOffset };
+    camera.rotation = 0.0f;
+    camera.zoom = 1.0f;
+
+    Map map(screenWidth,screenHeight,camera);
     map.setup();
 
-    Player player({0,0,50,100});
+    Player player({0,0,50,100},camera);
     player.setup();
     player.color = RED;
 
@@ -30,6 +37,8 @@ int main(void)
         BeginDrawing();
             
             ClearBackground(RAYWHITE);
+
+            BeginMode2D(camera);
 
             map.draw();
             

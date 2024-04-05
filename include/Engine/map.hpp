@@ -9,7 +9,7 @@
 class Map{
 public:
 
-    Map(int windowWidth,int windowHeight){
+    Map(int windowWidth,int windowHeight,Camera2D& camera) : camera(camera){
         this->windowWidth = windowWidth;
         this->windowHeight = windowHeight;
     }
@@ -27,11 +27,13 @@ public:
 
     int blockSize = 50;
     int lineLength = 24;
+    int dirtLineLenght = 4;
 private:
     int windowWidth;
     int windowHeight;
     Vector2 mousePos;
     Vector2 calculateBlockPositon();
+    Camera2D& camera;
     
     
     

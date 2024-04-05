@@ -8,7 +8,7 @@ void Player::setup(){
     velocity = 0;
     gravity = 1;
     maxVelocity = 30;
-
+    colliderOptimisationBlockLimit = 180;
 }
 
 void Player::render(std::vector<Block*> blocks ){
@@ -33,14 +33,15 @@ void Player::render(std::vector<Block*> blocks ){
             
         }
         
-
-        Collider::addCollider(rect,blocks[i]->getRect());
-
-        
+        if((blocks[i]->getRect().x <= rect.x && blocks[i]->getRect().x >= rect.x - colliderOptimisationBlockLimit) || (blocks[i]->getRect().x >= rect.x && blocks[i]->getRect().x <= rect.x + colliderOptimisationBlockLimit)){
+            if((blocks[i]->getRect().y >= rect.y && blocks[i]->getRect().y <= rect.y + colliderOptimisationBlockLimit) || (blocks[i]->getRect().y <= rect.y && blocks[i]->getRect().y >= rect.y - colliderOptimisationBlockLimit)){
+                Collider::addCollider(rect,blocks[i]->getRect());
+                //blocks[i]->setColor(BLACK);
+                
+            }
+        }
     }
 
-    
-    
     velocity += gravity;
 
     if(IsKeyPressed(KEY_SPACE) && !isJumping){
@@ -48,13 +49,13 @@ void Player::render(std::vector<Block*> blocks ){
         isJumping = true;
     }
 
-    
+    //camera.target = (Vector2){ rect.x + rect.width / 2, rect.y + rect.height / 2 }; 
+    float cameraSpeed = 2.0f; // Kamera hızını ayarlayın
+    camera.target.x += (rect.x - camera.target.x) * cameraSpeed * GetFrameTime();
+    camera.target.y += (rect.y - camera.target.y) * cameraSpeed * GetFrameTime();
 
-    
-    
 }
 
 void Player::draw(){
     GameObject::draw();
-
 }

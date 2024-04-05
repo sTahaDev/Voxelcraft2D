@@ -19,7 +19,8 @@ public:
     void render();
     void draw();
     Rectangle getRect();
-    bool isClicked = false;
+    void setColor(Color color);
+    bool isClicked(Camera2D& camera);
 
 private:
     int x;
@@ -27,6 +28,8 @@ private:
     int width;
     int height;
     Vector2 mousePos;
+    
+    
     
     
 };
