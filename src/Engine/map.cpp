@@ -2,7 +2,7 @@
 
 void Map::setup()
 {
-
+    
     // Çimen Katmanı
     for (int i = 0; i < lineLength; i++)
     {
@@ -26,6 +26,7 @@ void Map::render()
     // Block Ekleme Mape
     if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
     {
+        
         AllMap.push_back(new Block(envanter.currentItem, this->calculateBlockPositon().x, calculateBlockPositon().y, blockSize, blockSize));
         AllMap.back()->setup();
     }

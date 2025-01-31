@@ -11,8 +11,6 @@ void Envanter::setup()
     items.push_back(blockUrls.empty);
     items.push_back(blockUrls.empty);
 
-    
-    
 }
 
 void Envanter::render()
